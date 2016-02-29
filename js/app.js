@@ -1,64 +1,32 @@
 (function() {
 	var app = angular.module('leagueProject', []);
 
-	app.controller('StoreController', function(){
-		this.products = gems;
-	});
+	app.controller('ExampleController', ['$scope','$http','$window',function($scope,$http,$window) {
+	  $scope.master = {};
 
-	app.controller('PanelController', function(){
-		this.tab = 1;
+	  $scope.update = function(user) {
+	    $scope.master = angular.copy(user);
+	    $http.get('https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/'+$scope.master.name+'?api_key=6c836041-52c1-4a82-9990-5f307d32e2bf')
+		.success(function(data, status, headers, config) {
+			console.log("Entered");
+		     $scope.datas = data;
+		})
+		.error(function(error, status, headers, config) {
+		     console.log(status);
+		     console.log("Error occured");
+		});
 
-		this.selectTab = function(setTab) {
-			this.tab = setTab;
-		};
+		$scope.reset();
+	   };
 
-		this.isSelected = function(checkTab) {
-			return this.tab === checkTab;
-		};
-	});
-
-	app.controller('ReviewController', function(){
-		this.review = {};
-
-		this.addReview = function(product){
-			product.reviews.push(this.review);
-			this.review = {};
-		};
-	});
-
-	var gems = [
-		{
-			name: 'Dodecahedron',
-			price: 2,
-			description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis risus maximus, tincidunt libero nec, pellentesque eros. Mauris sed ultricies leo, eu scelerisque justo. Sed elementum mi nec felis posuere fringilla. Pellentesque eget condimentum mauris, sit amet placerat nulla. Nullam venenatis, felis porta accumsan laoreet, nisl risus venenatis ligula, in pretium neque lorem at enim. Nam porta nunc a tincidunt facilisis. Duis et purus vitae lorem porttitor suscipit.',
-			canPurchase: true,
-			soldOut: false,
-			reviews: [
-				{
-					stars: 5,
-					body: "I love this product!",
-					author: "joe@thomas.com"
-				},
-				{
-					stars: 1,
-					body: "This product sucks",
-					author: "tim@hater.com"
-				}
-			]
-		},
-		{
-			name: 'Pentagonal Gem',
-			price: 5.95,
-			description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis risus maximus, tincidunt libero nec, pellentesque eros. Mauris sed ultricies leo, eu scelerisque justo. Sed elementum',
-			canPurchase: true,
-			soldOut:false,
-		}
-	];
-
-	app.directive('myCustomer', function() {
-	  return {
-	    restrict: 'E',
-	    templateUrl: '../angular/product-title.html'
+	  $scope.reset = function(form) {
+	    if (form) {
+	      form.$setPristine();
+	      form.$setUntouched();
+	    }
+	    $scope.user = angular.copy($scope.master);
 	  };
-	});
+
+	  $scope.reset();
+	}]);
 })();
