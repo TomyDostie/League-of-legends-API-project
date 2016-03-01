@@ -4,3 +4,22 @@
 .ng-valid.ng-dirty {
 	border-color: #78FA89;
 }
+
+.row-centered{
+	text-align: center;
+}
+
+.profileInfo{
+	padding-top: 20px;
+}
+
+.noListStyle, .noListStyle ul li{list-style-type:none;}
+
+.profileImage{padding-right: 20px;}
+
+#profileInformations{display:none;}
+
+.navTabs{
+	margin-left: 25px !important;
+	padding-top: 20px !important;
+}

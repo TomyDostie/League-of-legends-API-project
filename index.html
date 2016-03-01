@@ -59,95 +59,99 @@
 	    </div><!-- /.navbar-collapse -->
 	  </div><!-- /.container-fluid -->
 	</nav>
-	
-	<div ng-controller="ExampleController">
-		<form class="form-inline" name="form" novalidate>
+
+	<div class="container-fluid col-lg-6 col-lg-offset-3 col-xs-8 col-xs-offset-2" ng-controller="ExampleController">
+	  <div class="row row-centered">
+	    <form id="summonerSearch" class="form-inline" name="form" novalidate>
 		  <div class="form-group">
 		    <label for="exampleInputName2">Name</label>
 		    <input class="form-control" type="text" ng-model="user.name" name="summonerName" ng-model-options="{ debounce: 250 }" placeholder="JohnTort" required />
 		  </div>
-		  <button type="submit" ng-disabled="user.name.$invalid" class="btn btn-default" ng-click="update(user)">Search</button>
+		  <button type="submit" ng-disabled="user.name.$invalid" id="buttonID" class="btn btn-default" ng-click="update(user)">Search</button>
 		</form>
-		<ul ng-repeat="p in datas">
-	      <br>
-	      <li>Summoner ID : {{p.id}}</li>
-	      <li>Summoner name : {{p.name}}</li>
-	      <li>Summoner level : {{p.summonerLevel}}</li>
-	      <img ng-src="http://ddragon.leagueoflegends.com/cdn/6.4.2/img/profileicon/{{p.profileIconId}}.png">
-	    </ul>
+	  </div>
 
-	    <ul ng-repeat="m in masteries">
-	      <br>
-	      <li ng-repeat="pages in m.pages">{{pages.name}}</li>
-	    </ul>
+	  <div class="row row-centered">
+	  	<img src="img/loader.gif" id="img" style="display:none"/ >
+	  </div>
+
+	  <div id="profileInformations" class="row profileInfo">
+	  	<div class="row">
+	  		 <ul ng-repeat="p in datas">
+			    <div class="pull-left profileImage"><img ng-src="http://ddragon.leagueoflegends.com/cdn/6.4.2/img/profileicon/{{p.profileIconId}}.png"></div>
+			    <div class="pull-left noListStyle">   
+		      		<li>Summoner ID : {{p.id}}</li>
+		     		<li>Summoner name : {{p.name}}</li>
+		      		<li>Summoner level : {{p.summonerLevel}}</li>
+			    </div>
+	   		 </ul>
+	  	</div>
+	  	<div class="row navTabs">
+    		<ul class="nav nav-tabs">
+			  <li class="active"><a data-toggle="tab" href="#masteriesPages">Masteries</a></li>
+			  <li><a data-toggle="tab" href="#runePage">Rune pages</a></li>
+			  <li><a data-toggle="tab" href="#gameHistory">Matches history</a></li>
+			</ul>
+
+			<div class="tab-content">
+			  <div id="masteriesPages" class="tab-pane fade in active">
+			  	<h3>Mastery pages</h3>
+			    <ul ng-repeat="m in masteries">
+			      <br>
+			      <li ng-repeat="pages in m.pages">{{pages.name}}</li>
+			    </ul>
+			  </div>
+			  <div id="runePage" class="tab-pane fade">
+			    <h3>Rune pages</h3>
+			    <ul ng-repeat="r in runes">
+			      <br>
+			      <li ng-repeat="pages in r.pages">{{pages.name}}</li>
+			    </ul>
+			  </div>
+			  <div id="gameHistory" class="tab-pane fade">
+			    <h3>Match history</h3>
+			    <ul>
+			      <br>
+			      <!--
+			      <li ng-repeat="game in games.games | limitTo:10">
+			      	{{game.championId}} - {{game.subType}}
+			      	<ul>
+			      		<li ng-repeat="players in game.fellowPlayers">{{players.summonerId}}</li>      		
+			      	</ul>
+			      </li>
+			      -->
+			      <li ng-repeat="game in newId.push">{{game.championId}} - {{game.subType}}</li>
+			    </ul>
+			  </div>
+	  	</div>
+	  </div>
+
+	  <!--
+	  <div class="row">
+	  	<div ng-view></div>
+	  </div>
+	  -->
+	  </div>
 	</div>
-	<div ng-view></div>
 
-	
-	<!--
-	<div class="col-md-4">
-		<ul class="list-group">
-			<li class="list-group-item" ng-repeat="product in store.products | orderBy:'-price'">
-				<h3 product-title><product-title></product-title></h3>
-				<section ng-controller="PanelController as panel">
-				<ul class="nav nav-pills">
-					<li ng-class="{ active:panel.isSelected(1) }"> <a href ng-click="panel.selectTab(1)">Description</a> </li>
-					<li ng-class="{ active:panel.isSelected(2) }"> <a href ng-click="panel.selectTab(2)">Specifications</a> </li>
-					<li ng-class="{ active:panel.isSelected(3) }"> <a href ng-click="panel.selectTab(3)">Reviews</a> </li>
-				</ul>
-				<div class="panel" ng-show="panel.isSelected(1)">
-					<h4>Description</h4>
-					<p>{{ product.description }}</p>
-				</div>
-				<div class="panel" ng-show="panel.isSelected(2)">
-					<h4>Specifications</h4>
-					<p>None yet</p>
-				</div>
-				<div class="panel" ng-show="panel.isSelected(3)">
-					<h4>Reviews</h4>
-					<blockquote ng-repeat="review in product.reviews">
-						<b>Stars: {{review.stars}}</b>
-						{{review.body}}
-						<cite>by: {{review.author}}</cite>
-					</blockquote>
-					<form name="reviewForm" ng-controller="ReviewController as reviewCtrl" ng-submit="reviewForm.&valid && reviewCtrl.addReview(product)" novalidate>
-		              <!--  Live Preview -->
-		              <!--
-		              <blockquote>
-		                <strong>{{reviewCtrl.review.stars}} Stars</strong>
-		                {{reviewCtrl.review.body}}
-		                <cite class="clearfix">-{{reviewCtrl.review.author}}</cite>
-		              </blockquote>
-
-		              <!--  Review Form -->
-		              <!--
-		              <h4>Submit a Review</h4>
-		              <fieldset class="form-group">
-		                <select ng-model="reviewCtrl.review.stars" class="form-control" ng-options="stars for stars in [5,4,3,2,1]"  title="Stars" required>
-		                  <option value="">Rate the Product</option>
-		                </select>
-		              </fieldset>
-		              <fieldset class="form-group">
-		                <textarea ng-model="reviewCtrl.review.body" class="form-control" placeholder="Write a short review of the product..." title="Review" required></textarea>
-		              </fieldset>
-		              <fieldset class="form-group">
-		                <input ng-model="reviewCtrl.review.author" type="email" class="form-control" placeholder="jimmyDean@example.org" title="Email" required/>
-		              </fieldset>
-		              <div> reviewForm is {{reviewForm.$valid}} </div>
-		              <fieldset class="form-group">
-		                <input type="submit" class="btn btn-primary pull-right" value="Submit Review" />
-		              </fieldset>
-		            </form>
-				</div>
-				</section>
-			</li>
-		</ul>
-	</div>
-	-->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-route.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-animate.js"></script>
 	<script type="text/javascript" src="js/app.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+
+		$('#buttonID').click(function(){
+		  $('#img').show();
+		  $("#profileInformations").fadeOut(100); //<----here
+		  $.ajax({
+		   success:function(result){
+		     $("#img").delay(1000).fadeOut(500);
+			 $("#profileInformations").delay(1200).fadeIn(500);
+		   }
+		  })
+		});
+	</script>
 </body>
 </html>
