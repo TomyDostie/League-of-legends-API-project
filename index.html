@@ -91,6 +91,7 @@
 			  <li class="active"><a data-toggle="tab" href="#masteriesPages">Masteries</a></li>
 			  <li><a data-toggle="tab" href="#runePage">Rune pages</a></li>
 			  <li><a data-toggle="tab" href="#gameHistory">Matches history</a></li>
+			  <li><a data-toggle="tab" href="#test">Test</a></li>
 			</ul>
 
 			<div class="tab-content">
@@ -112,15 +113,21 @@
 			    <h3>Match history</h3>
 			    <ul>
 			      <br>
-			      <!--
 			      <li ng-repeat="game in games.games | limitTo:10">
-			      	{{game.championId}} - {{game.subType}}
+			      	{{game.championId}} - {{game.subType}} {{game.stats.win}}
 			      	<ul>
-			      		<li ng-repeat="players in game.fellowPlayers">{{players.summonerId}}</li>      		
+			      		<li ng-repeat="players in game.fellowPlayers">{{players.summonerId}}</li>   		
 			      	</ul>
 			      </li>
-			      -->
-			      <li ng-repeat="game in newId.push">{{game.championId}} - {{game.subType}}</li>
+			    </ul>
+			  </div>
+			  <div id="test" class="tab-pane fade">
+			    <h3>Test page</h3>
+			    <ul>
+			      <br>
+			      <li ng-repeat="person in profiles">
+			      	{{person.name}}
+			      </li>
 			    </ul>
 			  </div>
 	  	</div>
