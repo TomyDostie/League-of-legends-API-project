@@ -123,10 +123,10 @@
 			  </div>
 			  <div id="test" class="tab-pane fade">
 			    <h3>Test page</h3>
-			    <ul>
+			    <ul ng-repeat="person in summonerNames">
 			      <br>
-			      <li ng-repeat="person in profiles">
-			      	{{person.name}}
+			      <li >
+			      	{{person}}
 			      </li>
 			    </ul>
 			  </div>

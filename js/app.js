@@ -100,14 +100,12 @@
 			     });
 
 			     angular.forEach(masterNewIds, function(item){
-			     	var counterTrois = 1;
 			     	console.log('Starts here');
 			     	$timeout(function() {
 			     		$http.get('https://na.api.pvp.net/api/lol/na/v1.4/summoner/'+item+'?api_key=6c836041-52c1-4a82-9990-5f307d32e2bf')
 						.success(function(data4, status, headers, config) {
-							 console.log("Entered profile");
-						     $scope.runes = data4;
-						     console.log(data4);
+						     $scope.summonerNames = data4;
+						     console.log($scope.summonerNames);
 						})
 						.error(function(error, status, headers, config) {
 						     console.log(status);
